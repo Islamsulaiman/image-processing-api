@@ -4,7 +4,7 @@
   "description": "this project is udacity's  advanced nanodegree first project.",
   "main": "index.js",
   "scripts": {
-    "start":"nodemon src/index.ts",
+    "start": "nodemon ./src/index.ts",
     "build": "npx tsc",
     "jasmine": "jasmine",
     "test": "npm run build && npm run jasmine"
@@ -26,12 +26,12 @@
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "express": "^4.17.2",
     "jasmine": "^4.0.2",
     "jasmine-spec-reporter": "^7.0.0"
   }
