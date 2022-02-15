@@ -1,16 +1,15 @@
 //require express to build a server
 import express from 'express';
 
+//import external middleware
+import mainEndpoint from './routes/mainEndpoint';
+
+
 //create the app object
 const app = express();
 
 
-//create the 1st endpoint
-app.get('/', (req: express.Request, res: express.Response) : void=>{
-    res.send("this is the main page!")
-    let data = req.query;
-    console.log(data);
-})
+app.use("/", mainEndpoint)
 
 
 //port number for server
