@@ -9,7 +9,7 @@ import mainEndpoint from "../../routes/mainEndpoint";
 
 
 //create superTest object
-const request = supertest(mainEndpoint);
+const requestMainEndpoint = supertest(mainEndpoint);
 
 //create our suite
 describe("testing our mainEndpoint middleware endpoint" , () =>  {
@@ -17,13 +17,10 @@ describe("testing our mainEndpoint middleware endpoint" , () =>  {
     it("testing the server status using superTest", async ()  =>{
 
         //get the response to the request object with it's route
-        const response = await request.get('/');
+        const response = await requestMainEndpoint.get('/');
 
         // use response object value in the expect block
         expect(response.status).toBe(200);
-
-        //invoke done function for superTest
-        // done();
     })
 })
 
