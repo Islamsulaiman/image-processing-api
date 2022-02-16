@@ -15,6 +15,12 @@ app.use("/", mainEndpoint)
 //port number for server
 export const port :number = 3000;
 
-app.listen(port, ():void => {
+//function for checking the server status
+export const server = () : void => {
     console.log(`the server is running on port ${port}`)
-})
+} 
+
+//listen to the port defined
+app.listen(port, server)
+
+

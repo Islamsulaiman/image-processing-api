@@ -1,3 +1,5 @@
+// in this file we are checking our endpoints
+
 //import superTest module to test endpoints
 import supertest from "supertest";
 
@@ -23,4 +25,3 @@ describe("testing our mainEndpoint middleware endpoint" , () =>  {
         expect(response.status).toBe(200);
     })
 })
-
