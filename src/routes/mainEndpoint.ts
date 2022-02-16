@@ -8,17 +8,17 @@ import sharp from 'sharp';
 import { promises as fs } from 'fs';
 
 //create endpoint object
-const mainEndpoint = express();
+export const mainEndpoint = express();
 
 //fixed path to the images default folder 
-const pathToImages = 'assets/full/';
+export const pathToImages: string = 'assets/full/';
 
-//create interfaces
-interface Query{
-    filename?: string,
-    width?: string,
-    height : string
-};
+// //create interfaces
+// interface Query{
+//     filename: string,
+//     width: string,
+//     height : string
+// };
 
 //create the 1st endpoint
 mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
@@ -28,8 +28,8 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
     // let data = req.query;
     let data = req.query;
 
-    //using sharp, resize the image by the query string provided
-    (async function(){
+    //using sharp with IIEF, resize the image by the query string provided
+    const writeFile = async(): Promise<void> =>{
         try {
             //get the width and the height from 'data' object
             let width = parseInt(data.width as string)
@@ -44,11 +44,7 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
             console.log(`Error from async func ${error}`)
         }
     }
-    )();
-    console.log(`${pathToImages}${data.filename}`)
-    console.log(data.filename);
-    console.log(typeof(data));
 })
-
+console.log ()
 
 export default mainEndpoint;
