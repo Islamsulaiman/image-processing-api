@@ -9,8 +9,3 @@ describe("check if functions defined or not", ()=> {
     })
 })
 
-describe("check if functions is called or not", ()=> {
-    it("server from index.ts", ()=> {
-        expect(server).toHaveBeenCalled();
-    })
-})
