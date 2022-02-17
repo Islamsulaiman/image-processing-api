@@ -18,7 +18,6 @@ const path = require('path');
 
 //using sharp with IIEF, resize the image by the query string provided
 export const writeFile = async (filename: string, width: number, height: number): Promise<void> => {
-
     try {
         //process the image
         let image = await sharp(`assets/full/image.jpeg`).resize(width, height).jpeg().toBuffer();
@@ -29,9 +28,9 @@ export const writeFile = async (filename: string, width: number, height: number)
     }
 };
 
-export const readFile = async (filename: string, width: number, height: number, res: express.Response) =>{
+export const readFile =  async (filename: string, width: number, height: number, res: express.Response) =>{
     try {
-        const image = await fs.readFile(`assets/thumb/image.jpeg`);
+        const image = await fs.readFile(`C:/Users/maesl/Desktop/imageProcessingApi/assets/thumb/name-${filename}-width=${width}-height=${height}.jpeg`);
         res.sendFile(`C:/Users/maesl/Desktop/imageProcessingApi/assets/thumb/name-${filename}-width=${width}-height=${height}.jpeg`);
 
     } catch (error) {
@@ -41,8 +40,11 @@ export const readFile = async (filename: string, width: number, height: number, 
 
 
 //create the 1st endpoint
-mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
-    // res.send("this is the main page from another route!");
+mainEndpoint.get('/api', (req: express.Request, res: express.Response) : void=>{
+    // res.write("this is the main page from another route!");
+
+
+    
 
     //get the query string from url to be used 
     const data: ParsedQs = req.query;
@@ -54,10 +56,10 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
 
     //get the width and the height from 'data' object
     let filename : string = data.filename as string;
-    let width: number = parseInt(data.width as string)
-    let height: number = parseInt(data.height as string)
+    let width: number = parseInt(data.width as string);
+    let height: number = parseInt(data.height as string);
 
-    console.log(data)
+    console.log(data);
 
     // //using path module, determine the path to image files inside assets folder
     // const fullFolderPath : string =  path.resolve('notFull');                          //path to full folder
@@ -66,20 +68,28 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
     // const thumbFolderPath : string = path.resolve('thumb');                         //path to thumb folder
     // const pathToThumbImage = path.join(thumbFolderPath, data.filename)              //path to images inside thumb folder 
 
+
     //call the function
     writeFile(filename, width, height);
 
     //call the readFile function 
-    readFile(filename, width, height, res);
+    // If we didnt use setTimeout, the endpoint will try to read before the file is even written, so to solve this problem, use setTimeOut to make the reading process lag after the writing in the event loop. 
+    setTimeout(()=>readFile(filename, width, height, res), 100);
+        
 
-    
+
+
+
     // //added code
     // console.log(fullFolderPath);
     // console.log(pathToFullImage);
     // console.log(correctPathToFullImage);
     // console.log(thumbFolderPath);
     // console.log(pathToThumbImage);
+
+    // setTimeout(()=> res.end(), 1000); 
 })
+
 
 
 export default mainEndpoint;

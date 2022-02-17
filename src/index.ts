@@ -10,7 +10,9 @@ const path = require('path');
 //create the app object
 export const app : express.Application = express();
 
-import {promises as fs} from 'fs';
+app.get('/', (req, res)=>{
+    res.send("this is the main page from another route!")
+})
 
 app.use("/", mainEndpoint)
 
