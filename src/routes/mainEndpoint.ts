@@ -7,19 +7,39 @@ import sharp from 'sharp';
 //import promise object from fs module
 import { promises as fs } from 'fs';
 
+//import ParsedQs type to be added for the query string from the url 
+import { ParsedQs } from 'qs';
+
 //create endpoint object
-export const mainEndpoint = express();
+export const mainEndpoint: express.Application = express();
 
 //require path module
 const path = require('path');
 
-
-//create interfaces
-interface Query{
-    filename: string,
-    width: string,
-    height : string
+//using sharp with IIEF, resize the image by the query string provided
+export const writeFile = async (width: number, height: number): Promise<void> => {
+    try {
+        //process the image
+        let image = await sharp(`assets/full/image.jpeg`).resize(width, height).jpeg().toBuffer();
+        fs.writeFile(`assets/thumb/image.jpeg`, image);
+        
+    } catch (error) {
+        console.log(`Error from async func in writeFile  ${error}`)
+    }
 };
+
+
+export const readFile = async(res: express.Response) =>{
+    try {
+        // const image = await fs.readFile(`assets/thumb/image.jpeg`);
+        res.sendFile(`C:/Users/User/Desktop/image-processing-api/assets/thumb/image.jpeg`);
+
+    } catch (error) {
+        console.log(`Error from async func in readFile ${error}`)
+    }
+}
+
+
 
 
 //create the 1st endpoint
@@ -27,7 +47,11 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
     // res.send("this is the main page from another route!");
 
     //get the query string from url to be used 
-    const data = req.query;
+    const data: ParsedQs = req.query;
+
+    //get the width and the height from 'data' object
+    let width: number = parseInt(data.width as string)
+    let height: number = parseInt(data.height as string)
 
     console.log(data)
 
@@ -38,47 +62,19 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
     const thumbFolderPath : string = path.resolve('thumb');                         //path to thumb folder
     const pathToThumbImage = path.join(thumbFolderPath, data.filename)              //path to images inside thumb folder 
 
-
-    //using sharp with IIEF, resize the image by the query string provided
-    const writeFile = async(): Promise<void> =>{
-        try {
-            //get the width and the height from 'data' object
-            let width: number = parseInt(data.width as string)
-            let height: number = parseInt(data.height as string)
-
-            console.log('inside async')
-
-            //process the image
-            let image = await sharp(`C:/Users/maesl/Desktop/imageProcessingApi/assets/full/image.jpeg`).resize(width, height).jpeg().toBuffer();
-            fs.writeFile(`C:/Users/maesl/Desktop/imageProcessingApi/assets/thumb/image.jpeg`, image);
-            
-
-        } catch (error) {
-            console.log(`Error from async func ${error}`)
-        }
-    }
     //call the function
-    writeFile();
+    writeFile(width, height);
 
-    const readFile = async() =>{
-        try {
-            const image = await fs.readFile(`C:/Users/maesl/Desktop/imageProcessingApi/assets/thumb/image.jpeg`);
-            console.log(image);
-            res.sendFile(`C:/Users/maesl/Desktop/imageProcessingApi/assets/thumb/image.jpeg`);
-
-        } catch (error) {
-            console.log(`Error from async func ${error}`)
-        }
-    }
-    readFile();
+    //call the readFile function 
+    readFile(res);
 
     
-            //added code
-            console.log(fullFolderPath);
-            console.log(pathToFullImage);
-            console.log(correctPathToFullImage);
-            console.log(thumbFolderPath);
-            console.log(pathToThumbImage);
+    //added code
+    console.log(fullFolderPath);
+    console.log(pathToFullImage);
+    console.log(correctPathToFullImage);
+    console.log(thumbFolderPath);
+    console.log(pathToThumbImage);
 })
 
 

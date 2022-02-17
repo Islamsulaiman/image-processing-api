@@ -3,9 +3,6 @@
 //import superTest module to test endpoints
 import supertest from "supertest";
 
-//import express
-import express from "express";
-
 //import endPoint module to be tested
 import mainEndpoint from "../../routes/mainEndpoint";
 
