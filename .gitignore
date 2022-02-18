@@ -1,3 +1,8 @@
 node_modules
 build
 ex
+# exclude everything inside thumb folder
+assets/thumb/*
+
+# exception to the rule
+!assets/thumb/.gitkeep 
