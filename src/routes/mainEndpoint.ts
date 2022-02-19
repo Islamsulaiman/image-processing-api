@@ -12,8 +12,8 @@ import  fs  from 'fs';
 //import ParsedQs type to be added for the query string from the url 
 import { ParsedQs } from 'qs';
 
-//create endpoint object
-export const mainEndpoint: express.Application = express();
+//create an instance of the express router object to creat new route that we will use with the app object
+export const mainEndpoint: express.Router = express.Router();
 
 //require path module
 import path from 'path';
@@ -32,7 +32,6 @@ export const writeFile = async (width: number, height: number, pathToFullImage: 
         fs.readdirSync(thumbFolderPath).forEach((file: string) => {
             // append item to thumbFolderContent array
             thumbFolderContent.push(file);
-
         });
 
         //indexOf array method returns -1 if the argument is not inside the caller array, and buy comparing with (!== -1 )we are saying that if it's in . 
@@ -59,7 +58,7 @@ export const readFile = (res: express.Response, pathToThumbImage: string) =>{
 }
 
 //create the 1st endpoint
-mainEndpoint.get('/image', (req: express.Request, res: express.Response) : void=>{
+mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
 
     //get the query string from url to be used 
     const data: ParsedQs = req.query;
@@ -75,7 +74,7 @@ mainEndpoint.get('/image', (req: express.Request, res: express.Response) : void=
     const thumbFolderPath : string = path.resolve('./assets/thumb');                                                        //path to thumb folder
     const pathToThumbImage : string = path.join(thumbFolderPath, `name-${filename}-width=${width}-height=${height}`)        //path to images inside thumb folder 
 
-    //call the function
+    //call the function to process and write new images 
     writeFile(width, height, pathToFullImage, pathToThumbImage, thumbFolderPath, filename);
 
     //call the readFile function 

@@ -4,14 +4,14 @@ import express from 'express';
 //import external middleware
 import mainEndpoint from './routes/mainEndpoint';
 
-//create the app object
+//create an instance of the app object
 export const app : express.Application = express();
 
 app.get('/', (req, res)=>{
     res.send("this is the main page from another route!")
 });
 
-app.use("/", mainEndpoint)
+app.use("/image", mainEndpoint)
 
 
 //port number for server

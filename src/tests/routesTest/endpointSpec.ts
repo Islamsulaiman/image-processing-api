@@ -3,9 +3,6 @@
 //import superTest module to test endpoints
 import supertest from "supertest";
 
-//import endPoint module to be tested
-import mainEndpoint from "../../routes/mainEndpoint";
-
 import app from "../..";
 
 //create superTest object
@@ -23,4 +20,4 @@ describe("testing our mainEndpoint middleware endpoint" , () =>  {
         // use response object value in the expect block
         expect(response.status).toEqual(200);
     })
-})
+});
