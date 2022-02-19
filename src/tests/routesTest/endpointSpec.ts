@@ -16,7 +16,7 @@ describe("testing our mainEndpoint middleware endpoint" , () =>  {
     it("testing the server status using superTest", async ()  =>{
 
         //get the response to the request object with it's route
-        const response = await requestMainEndpoint.get('/api');
+        const response = await requestMainEndpoint.get('/');
 
         // use response object value in the expect block
         expect(response.status).toEqual(200);

@@ -39,14 +39,14 @@ export const readFile = (res: express.Response, pathToThumbImage: string) =>{
 }
 
 //create the 1st endpoint
-mainEndpoint.get('/api', (req: express.Request, res: express.Response) : void=>{
-    // res.write("API route");
+mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
+    res.send("API route");
 
     //get the query string from url to be used 
     const data: ParsedQs = req.query;
 
     //get the width and the height from 'data' object
-    let filename = data.filename as string;
+    let filename : string = data.filename as string;
     let width: number = parseInt(data.width as string);
     let height: number = parseInt(data.height as string);
 
@@ -54,7 +54,7 @@ mainEndpoint.get('/api', (req: express.Request, res: express.Response) : void=>{
     const fullFolderPath : string =  path.resolve('./assets/full');                                             //path to full folder
     const pathToFullImage : string = path.join(fullFolderPath, filename)                                        //path to full selected image
     const thumbFolderPath : string = path.resolve('./assets/thumb');                                            //path to thumb folder
-    const pathToThumbImage = path.join(thumbFolderPath, `name-${filename}-width=${width}-height=${height}`)     //path to images inside thumb folder 
+    const pathToThumbImage : string = path.join(thumbFolderPath, `name-${filename}-width=${width}-height=${height}`)     //path to images inside thumb folder 
 
     //call the function
     writeFile(width, height, pathToFullImage, pathToThumbImage);
@@ -66,9 +66,7 @@ mainEndpoint.get('/api', (req: express.Request, res: express.Response) : void=>{
     console.log(data);          //delete this line
     
     // res.end(); 
-})
-
-
+});
 
 
 export default mainEndpoint;
