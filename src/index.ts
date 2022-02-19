@@ -4,15 +4,12 @@ import express from 'express';
 //import external middleware
 import mainEndpoint from './routes/mainEndpoint';
 
-//import path module
-const path = require('path');
-
 //create the app object
 export const app : express.Application = express();
 
 app.get('/', (req, res)=>{
     res.send("this is the main page from another route!")
-})
+});
 
 app.use("/", mainEndpoint)
 
