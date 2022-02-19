@@ -39,8 +39,7 @@ export const readFile = (res: express.Response, pathToThumbImage: string) =>{
 }
 
 //create the 1st endpoint
-mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
-    res.send("API route");
+mainEndpoint.get('/image', (req: express.Request, res: express.Response) : void=>{
 
     //get the query string from url to be used 
     const data: ParsedQs = req.query;
@@ -51,10 +50,10 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
     let height: number = parseInt(data.height as string);
 
     //using path module, determine the path to image files inside assets folder
-    const fullFolderPath : string =  path.resolve('./assets/full');                                             //path to full folder
-    const pathToFullImage : string = path.join(fullFolderPath, filename)                                        //path to full selected image
-    const thumbFolderPath : string = path.resolve('./assets/thumb');                                            //path to thumb folder
-    const pathToThumbImage : string = path.join(thumbFolderPath, `name-${filename}-width=${width}-height=${height}`)     //path to images inside thumb folder 
+    const fullFolderPath : string =  path.resolve('./assets/full');                                                         //path to full folder
+    const pathToFullImage : string = path.join(fullFolderPath, filename)                                                    //path to full selected image
+    const thumbFolderPath : string = path.resolve('./assets/thumb');                                                        //path to thumb folder
+    const pathToThumbImage : string = path.join(thumbFolderPath, `name-${filename}-width=${width}-height=${height}`)        //path to images inside thumb folder 
 
     //call the function
     writeFile(width, height, pathToFullImage, pathToThumbImage);
@@ -65,32 +64,6 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response) : void=>{
 
     console.log(data);          //delete this line
     
-    // res.end(); 
 });
 
-
 export default mainEndpoint;
-
-
-
-
-    // //using path module, determine the path to image files inside assets folder
-    // const fullFolderPath : string =  path.resolve('./assets/full/');                          //path to full folder
-    // const pathToFullImage : string = path.join(fullFolderPath, filename, '.jpeg')       //path to full selected image
-    // const correctPathToFullImage : string = path.normalize(pathToFullImage)
-    // const thumbFolderPath : string = path.resolve('thumb');                         //path to thumb folder
-    // const pathToThumbImage = path.join(thumbFolderPath, filename)              //path to images inside thumb folder 
-
-
-    // //added code
-    // console.log(fullFolderPath);
-    // console.log(pathToFullImage);
-    // console.log(correctPathToFullImage);
-    // console.log(thumbFolderPath);
-    // console.log(pathToThumbImage);
-
-
-
-
-
-
