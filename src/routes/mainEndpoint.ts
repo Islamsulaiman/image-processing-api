@@ -2,7 +2,7 @@
 import express from 'express';
 
 //import writeFile function
-import { writeFile, readFile } from './routes';
+import { writeFile, readFile } from './utilities/routes';
 
 //import ParsedQs type to be added for the query string from the url
 import { ParsedQs } from 'qs';

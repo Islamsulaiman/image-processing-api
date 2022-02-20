@@ -2,7 +2,7 @@
 
 //importing functions
 import { server } from '..'; //from index.ts
-import { writeFile, readFile } from '../routes/routes';
+import { writeFile, readFile } from '../routes/utilities/routes';
 
 describe('check if functions defined or not', () => {
   it('server function from index.ts', () => {
