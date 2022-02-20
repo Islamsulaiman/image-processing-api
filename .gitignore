@@ -7,8 +7,8 @@ assets/thumb/*
 # exception to the rule
 !assets/thumb/.gitkeep 
 
-# exclude everything inside thumb folder
+# exclude everything inside full folder
 assets/full/*
 
-# exception to the rule
-!assets/full/.gitkeep 
+# exception to the main image to be tested
+!assets/full/image.jpeg
