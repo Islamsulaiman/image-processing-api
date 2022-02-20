@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 app.use('/image', mainEndpoint);
 
 //port number for server
+//dont give this variable because its already initialized according to Type Inference and to prevent my code to be verbose
 export const port = 3000;
 
 //function for checking the server status
