@@ -2,10 +2,7 @@
 import express from 'express';
 
 //import writeFile function
-import  { writeFile,readFile } from './routes';
-
-
-import fs from 'fs';
+import { writeFile, readFile } from './routes';
 
 //import ParsedQs type to be added for the query string from the url
 import { ParsedQs } from 'qs';
@@ -15,10 +12,6 @@ export const mainEndpoint: express.Router = express.Router();
 
 //require path module
 import path from 'path';
-
-
-
-
 
 // // create the 1st endpoint
 mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
@@ -30,26 +23,37 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
   const width: number = parseInt(data.width as string);
   const height: number = parseInt(data.height as string);
 
-
   // //  in this section I want to check if width and height provided by the user is valid numbers
-   
+
   //dont give this variable a type because its already initialized according to Type Inference and to prevent my code from being verbose;
-  let widthIsNaN = false;       //false as default, assume the user input is correct
-  let heightIsNan = false;  
-  // isNaNa return true if argument not a number. 
-  if(isNaN(width)){
+  let widthIsNaN = false; //false as default, assume the user input is correct
+  let heightIsNan = false;
+
+  // isNaNa return true if argument not a number.
+  if (isNaN(width)) {
     widthIsNaN = true;
-  }if (isNaN(width)){
-      heightIsNan = true;
+  }
+  if (isNaN(height)) {
+    heightIsNan = true;
   }
 
-  // SEND THE ERROR TO THE USER
-  if (widthIsNaN && heightIsNan){
-      res.send(`your height : ( ${data.height} ) and your width : ( ${data.width} ) is not a valid numbers, please insert a number`)
-  }else if(widthIsNaN){
-      res.send(`your width : ( ${data.width} ) is not a valid number, please insert a number`)
-  }else if(heightIsNan){
-      res.send(`your height : ( ${data.height} ) is not a valid number, please insert a number`)
+  // // SEND THE ERROR TO THE USER
+  if (widthIsNaN && heightIsNan) {
+    res.send(
+      `your height : ( ${data.height} ) and your width : ( ${data.width} ) is not a valid numbers, please insert a number`
+    );
+    //to end execution of the whole endpoint
+    return;
+  } else if (widthIsNaN) {
+    res.send(
+      `your width : ( ${data.width} ) is not a valid number, please insert a number`
+    );
+    return;
+  } else if (heightIsNan) {
+    res.send(
+      `your height : ( ${data.height} ) is not a valid number, please insert a number`
+    );
+    return;
   }
 
   // //  using path module, determine the path to image files inside assets folder
@@ -60,7 +64,6 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
     thumbFolderPath,
     `name-${filename}-width=${width}-height=${height}`
   ); //path to images inside thumb folder
-
 
   // //  add these two calls inside IIFE and make it asynchronous to force readeFile to wait for the promise returned by writeFile, so  the API dos'nt read before it write's.
   (async function () {

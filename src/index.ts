@@ -7,14 +7,14 @@ import mainEndpoint from './routes/mainEndpoint';
 //create an instance of the app object
 export const app: express.Application = express();
 
-app.get('/', (req, res) => {
+app.get('/', (req: express.Request, res: express.Response): void => {
   res.send('this is the main page from another route!');
 });
 
 app.use('/image', mainEndpoint);
 
 //port number for server
-//dont give this variable because its already initialized according to Type Inference and to prevent my code to be verbose
+//dont give this variable a type because its already initialized according to (Type Inference) and to prevent my code from being verbose
 export const port = 3000;
 
 //function for checking the server status

@@ -1,15 +1,13 @@
 // this file will contain the functions used by mainEndpoint
 
 //import fs module to navigate file system
-import fs from 'fs'
+import fs from 'fs';
 
 //import sharp for image processing
 import sharp from 'sharp';
 
 //import express module
 import express from 'express';
-
-
 
 //using sharp with IIEF, resize the image by the query string provided
 export const writeFile = async (
@@ -22,6 +20,7 @@ export const writeFile = async (
 ): Promise<void> => {
   try {
     //test is the potential name of the processed image saved at the thumb folder if it was processed.
+    //dont give this variable a type because its already initialized according to (Type Inference) and to prevent my code from being verbose
     const test = `name-${filename}-width=${width}-height=${height}.jpeg`;
 
     //thumbFolderContent is the content inside thumb folder, which is the previously processed images.
@@ -37,7 +36,7 @@ export const writeFile = async (
     // this if statement will  decide if the image is already processed then do nothing, if new image process new.
     if (thumbFolderContent.indexOf(test) === -1) {
       //process the image
-      const image = await sharp(`${pathToFullImage}.jpeg`)
+      const image: Buffer = await sharp(`${pathToFullImage}.jpeg`)
         .resize(width, height)
         .jpeg()
         .toBuffer();
@@ -46,16 +45,13 @@ export const writeFile = async (
       console.log('writing a new image');
       //add await to the return of this promise, so
       return await fs.promises.writeFile(`${pathToThumbImage}.jpeg`, image);
-    }
-    else if(thumbFolderContent.indexOf(test) != -1){
-        console.log('This image is already written.')
+    } else if (thumbFolderContent.indexOf(test) != -1) {
+      console.log('This image is already written.');
     }
   } catch (error) {
     console.log(`Error from async func in writeFile  ${error}`);
   }
 };
-
-
 
 export const readFile = (res: express.Response, pathToThumbImage: string) => {
   try {
@@ -64,7 +60,5 @@ export const readFile = (res: express.Response, pathToThumbImage: string) => {
     console.log(`Error from async func in readFile ${error}`);
   }
 };
-
-
 
 export default writeFile;
