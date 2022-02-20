@@ -4,8 +4,8 @@
   "description": "this project is udacity's  advanced nanodegree first project.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./build/index.js",
-    "prettier": "prettier --config .prettierrc ./build/index*.js --write",
+    "lint": "eslint ./src/**/**/*.ts",
+    "prettier": "prettier --config .prettierrc ./src/**/**/*.ts --write",
     "start": "nodemon ./src/index.ts",
     "build": "npx tsc",
     "jasmine": "jasmine",
