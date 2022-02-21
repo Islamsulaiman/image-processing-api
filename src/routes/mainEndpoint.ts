@@ -59,6 +59,21 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
     return;
   }
 
+
+  // // if the width or the height is less than 1 , return error to the user.
+
+  if(width < 1 && height <1){
+    res.send(`Your entered width : ( ${data.width} ) and height : ( ${data.height} ) is less than 1 , please enter a number equal or higher than 1`)
+    return;
+  }else if(width < 1){
+    res.send(`Your entered width : ( ${data.width} ) is less than 1 , please enter a number equal or higher than 1`)
+    return;   
+  }else if (height <1) {
+    res.send(`Your entered height : ( ${data.height} ) is less than 1 , please enter a number equal or higher than 1`)
+    return;    
+  }
+
+  
   // //  using path module, determine the path to image files inside assets folder
   const fullFolderPath: string = path.resolve('./assets/full'); //path to full folder
   const pathToFullImage: string = path.join(fullFolderPath, filename); //path to full selected image
