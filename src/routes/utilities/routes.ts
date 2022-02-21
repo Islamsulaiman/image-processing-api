@@ -41,13 +41,12 @@ export const writeFile = async (
         .jpeg()
         .toBuffer();
 
-      // write the processed image to the target folder using writeFile method from within promises object inside fs module
-      console.log('writing a new image');
       //add await to the return of this promise, so
       return await fs.promises.writeFile(`${pathToThumbImage}.jpeg`, image);
-    } else if (thumbFolderContent.indexOf(test) != -1) {
-      console.log('This image is already written.');
     }
+    // else if (thumbFolderContent.indexOf(test) != -1) {
+    //   throw new Error (`( ${filename} is already there!!)`)
+    // }
   } catch (error) {
     console.log(`Error from async func in writeFile  ${error}`);
   }
