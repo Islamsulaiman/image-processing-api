@@ -13,6 +13,9 @@ export const mainEndpoint: express.Router = express.Router();
 //require path module
 import path from 'path';
 
+//import fs module
+import fs from 'fs';
+
 // // create the 1st endpoint
 mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
   // // get the query string from url to be used
@@ -40,18 +43,18 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
   // // SEND THE ERROR TO THE USER
   if (widthIsNaN && heightIsNan) {
     res.send(
-      `your height : ( ${data.height} ) and your width : ( ${data.width} ) is not a valid numbers, please insert a number`
+      `your input height : ( ${data.height} ) and width : ( ${data.width} ) is not a valid numbers, please insert a number`
     );
     //to end execution of the whole endpoint
     return;
   } else if (widthIsNaN) {
     res.send(
-      `your width : ( ${data.width} ) is not a valid number, please insert a number`
+      `your input width : ( ${data.width} ) is not a valid number, please insert a number`
     );
     return;
   } else if (heightIsNan) {
     res.send(
-      `your height : ( ${data.height} ) is not a valid number, please insert a number`
+      `your input height : ( ${data.height} ) is not a valid number, please insert a number`
     );
     return;
   }
@@ -64,6 +67,26 @@ mainEndpoint.get('/', (req: express.Request, res: express.Response): void => {
     thumbFolderPath,
     `name-${filename}-width=${width}-height=${height}`
   ); //path to images inside thumb folder
+
+  // // in this section I want to check that the filename user provide is already in the full folder.
+
+  //thumbFolderContent is the content inside thumb folder, which is the previously processed images.
+  const thumbFolderContent: string[] = [];
+
+  // this read all the previously processed images inside thumb folder
+  fs.readdirSync('assets/full').forEach((file: string) => {
+    // append item to thumbFolderContent array
+    thumbFolderContent.push(file);
+  });
+
+  //indexOf array method returns -1 if the argument is not inside the caller array, and buy comparing with (!= -1 )we are saying that if it's in .
+  //this conditional means that the input file name is not in full folder.
+  if (thumbFolderContent.indexOf(`${filename}.jpeg`) == -1) {
+    res.send(
+      `Your input file name : ( ${data.filename} ) is not inside /assets/full folder, please insert your image first`
+    );
+    return;
+  }
 
   // //  add these two calls inside IIFE and make it asynchronous to force readeFile to wait for the promise returned by writeFile, so  the API dos'nt read before it write's.
   (async function () {
