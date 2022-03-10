@@ -1,11 +1,12 @@
 // in this file we are checking our endpoints
 
-//import superTest module to test endpoints
+//import superTest module to test endpoints, supertest used to abstract testing HTTP routes 
 import supertest from 'supertest';
 
+//import app express object from server file
 import app from '../..';
 
-//create superTest object
+//create superTest object, pass app to supertest() so the it can access request and response functionalities from express.
 const requestMainEndpoint = supertest(app);
 
 //create our suite
